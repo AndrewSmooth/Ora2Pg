@@ -1,10 +1,15 @@
+import re
 
-def to_number_to_cast(name_func):
-    name_func.replace('"', "'")
-    if "TO_NUMBER" in name_func:
-        name_func=name_func.replace("TO_NUMBER", "CAST")
-        return name_func.replace("')", "' AS numeric)")
-    elif "to_number" in name_func:
-        name_func = name_func.replace("to_number", "CAST")
-        return name_func.replace("')", "' AS numeric)")
+
+def number_to_cast(query):
+    pattern = r'TO_NUMBER\((.*?)\)'
+
+    def replace_match(match):
+        value = match.group(1).strip()
+        return f"CAST({value} AS NUMERIC)"
+
+    pg_query = re.sub(pattern, replace_match, query, flags=re.IGNORECASE)
+
+    return pg_query
+
 

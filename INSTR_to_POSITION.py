@@ -1,6 +1,16 @@
-def instr_to_position(name_func):
-    if "INSTR" in name_func:
-        return name_func.replace("INSTR", "POSITION")
-    elif "instr" in name_func:
-        return name_func.replace("instr", "POSITION")
+import re
+
+
+def instr_to_position(query):
+
+    def replace_instr(match):
+        parts = match.group(1).split(',')
+        string = parts[0].strip()
+        substring = parts[1].strip()
+        return f"POSITION({substring} IN {string})"
+
+
+    pg_query = re.sub(r'INSTR\((.*?)\)', replace_instr, query, flags=re.IGNORECASE)
+
+    return pg_query
 
