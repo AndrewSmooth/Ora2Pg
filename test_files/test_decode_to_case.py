@@ -1,5 +1,5 @@
 import pytest
-from DECODE_to_CASE import decode_to_case
+from decode_to_case import decode_to_case
 
 def test_simple_decode(): 
     oracle_sql = "SELECT DECODE(status, 1, 'active', 0, 'inactive') FROM users"

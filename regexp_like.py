@@ -1,6 +1,6 @@
 import re
 
-def convert_oracle_regex_to_postgres(oracle_sql):
+def regexp_like_to_postgres(oracle_sql):
     # Паттерн для поиска REGEXP_LIKE в Oracle SQL
     pattern = re.compile(
         r'REGEXP_LIKE\s*\(\s*(?P<column>[a-zA-Z_][a-zA-Z0-9_]*)\s*,\s*(?P<pattern>\'.*?\')\s*(?:,\s*\'(?P<modifier>[i]?)\'\s*)?\)',

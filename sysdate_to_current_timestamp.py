@@ -1,6 +1,6 @@
 import re
 
-def convert_oracle_sysdate_to_postgres(oracle_sql):
+def sysdate_to_current_timestamp(oracle_sql):
     # паттерн для замены SYSDATE
     pattern = re.compile(r'\bSYSDATE\b', re.IGNORECASE)
     
