@@ -1,5 +1,5 @@
 import pytest
-from ishodnik import subtstr_to_substring  # Убедитесь, что импортируете вашу функцию правильно
+from SUBSTR_SUBSTRING import subtstr_to_substring  # Убедитесь, что импортируете вашу функцию правильно
 
 def test_substr_with_length():
     sql_query = "SELECT SUBSTR(name, 1, 5) FROM users;"

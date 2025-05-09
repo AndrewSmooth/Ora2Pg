@@ -53,13 +53,12 @@ def merge_to_delete_update_insert(oracle_sql: str, use_update: bool):
     
     # парсинг названий изменяемых столбцов в update
     update_matches = re.findall(r'UPDATE SET\s+(.*?)(?=\s*WHEN NOT MATCHED|\s*;|\s*DELETE|\s*$)', oracle_sql, re.IGNORECASE | re.DOTALL)
-
+    attributes = []
     if update_matches:
         # Разбиваем на отдельные присваивания
         assignments = [a.strip() for a in update_matches[0].split(',')]
         
         # Извлекаем атрибуты (левые части присваиваний)
-        attributes = []
         for assignment in assignments:
             # Ищем паттерн "таблица.атрибут" в левой части
             match = re.search(r'([a-z])\.([a-z_]+)\s*=', assignment, re.IGNORECASE)
@@ -73,6 +72,7 @@ def merge_to_delete_update_insert(oracle_sql: str, use_update: bool):
         \s*VALUES\s*\(\s*((?:[^,)]+(?:\s*,\s*[^,)]+)*)\s*)\)  # Значения
     '''
     match = re.search(insert_args_pattern, oracle_sql, re.IGNORECASE | re.VERBOSE)
+    insert_args = {}
     if match:
         columns = [col.strip() for col in re.split(r'\s*,\s*', match.group(1))]
         values = [val.strip() for val in re.split(r'\s*,\s*', match.group(2))]
@@ -147,6 +147,7 @@ def translate_update(tt: str, tt_a: str, st: str, st_a: str, condition: str, ext
     if extra_condition:
         end_string += f" AND {extra_condition}"
 
+    middle_string = ""
     # обновление с удалением
     if deletion_args:
         pattern = r'^\(?([A-Za-z])\.'

@@ -3,7 +3,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import pytest
-from sdgs import merge_to_delete_update_insert 
+from merge_to_delete_update_insert import merge_to_delete_update_insert 
 
 def merge_to_delete_update_insrt():
     oracle_sql = """
